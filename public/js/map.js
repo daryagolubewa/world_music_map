@@ -130,14 +130,41 @@ function drawMap(data) {
             google.maps.event.addListener(country, 'mouseout', function() {
                 this.setOptions({fillOpacity: 0});
             });
-            google.maps.event.addListener(country, 'click', function() {
-                alert(this.name);
+            google.maps.event.addListener(country, 'click', async function() {
+                const url = 'https://www.googleapis.com/youtube/v3/search?part=snippet\n' +
+                    '                     &q=top+tracks+' + this.name + '&type=playlistId\n' +
+                    '                     &key=AIzaSyATcDyZ8d0Tk2Xa10uDW9sTrWALE3DLfXM';
+
+                let response = await fetch(url);
+                let playlistAll = await response.json();
+                let playlistId = playlistAll.items[1].id.playlistId;
+
+                let videos = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' +
+                    `${playlistId}` + '&key=AIzaSyATcDyZ8d0Tk2Xa10uDW9sTrWALE3DLfXM';
+
+                let resVideos = await fetch(videos);
+                let videoAll = await resVideos.json();
+                // console.log(videoAll);
+                let videoArr = [];
+                for (let i = 0; i < videoAll.items.length; i++) {
+                    videoArr.push(videoAll.items[i].snippet.resourceId.videoId);
+                }
+
+                let player = document.getElementsByTagName('iframe')[1];
+
+                let randomNum = Math.floor(Math.random() * 50) + 1;
+                let currentVideo = videoArr[randomNum];
+                player.src = 'https://www.youtube.com/embed/' + `${currentVideo}`;
+                // player.src = 'https://www.youtube.com/embed/NVIbCvfkO3E';
+
+                player.style.display = 'block'
             });
 
             country.setMap(map);
         }
     }
 }
+
 
 function constructNewCoordinates(polygon) {
     var newCoordinates = [];

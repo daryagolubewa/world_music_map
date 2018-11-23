@@ -1,15 +1,4 @@
-// document.addEventListener('DOMContentLoaded', () => {
-//     var map;
-//     function initMap() {
-//         map = new google.maps.Map(document.getElementById('map'), {
-//             center: {lat: 30, lng: 20},
-//             zoom: 3
-//
-//         });
-//     }
-// });
 
-// the map
 var map;
 
 function initialize() {
@@ -144,26 +133,41 @@ function drawMap(data) {
 
                 let resVideos = await fetch(videos);
                 let videoAll = await resVideos.json();
-                // console.log(videoAll);
                 let videoArr = [];
                 for (let i = 0; i < videoAll.items.length; i++) {
                     videoArr.push(videoAll.items[i].snippet.resourceId.videoId);
                 }
 
                 let player = document.getElementsByTagName('iframe')[1];
+                let close = document.getElementsByClassName('close')[0];
 
                 let randomNum = Math.floor(Math.random() * 50) + 1;
                 let currentVideo = videoArr[randomNum];
                 player.src = 'https://www.youtube.com/embed/' + `${currentVideo}`;
-                // player.src = 'https://www.youtube.com/embed/NVIbCvfkO3E';
 
-                player.style.display = 'block'
+
+                player.style.display = 'block';
+                close.style.display = 'inline';
             });
 
             country.setMap(map);
         }
     }
 }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    let greeting = document.getElementsByClassName('greeting')[0];
+    greeting.style.display = 'block';
+    let close = document.getElementsByClassName('close')[0];
+    close.addEventListener('click', () => {
+        let player = document.getElementsByTagName('iframe')[1];
+        player.style.display = 'none';
+        close.style.display = 'none';
+    })
+});
+
+
 
 
 function constructNewCoordinates(polygon) {
@@ -176,4 +180,3 @@ function constructNewCoordinates(polygon) {
     return newCoordinates;
 }
 
-// google.maps.event.addDomListener(window, 'load', initialize);

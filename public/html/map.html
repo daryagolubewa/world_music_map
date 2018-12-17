@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>World music</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel='stylesheet' href='../stylesheets/style.css' />
+    <!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initialize"></script>-->
+
+
+    <script src="../js/map.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATcDyZ8d0Tk2Xa10uDW9sTrWALE3DLfXM&callback=initialize"></script>
+
+
+    <script>
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+</head>
+<body>
+<div id="map"></div>
+<div class="modal">
+    <span class="close">&times;</span>
+    <iframe style="position: absolute; overflow: hidden" width='350' height="250" src="https://www.youtube.com/embed/"
+            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+</div>
+
+
+</body>
+</html>
